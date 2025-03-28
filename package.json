@@ -22,7 +22,7 @@
     "author": "",
     "license": "ISC",
     "engines": {
-      "node": "16.x"
+      "node": "18.x"
     },
     "devDependencies": {
       "@defi-wonderland/smock": "^2.2.0",
