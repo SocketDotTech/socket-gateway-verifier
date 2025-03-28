@@ -19,3 +19,11 @@ node_modules/
 # Dist
 dist/
 
+# Hardhat
+artifacts/
+cache/
+cache_hardhat/
+typechain/
+
+# Etherscan
+.etherscan/
