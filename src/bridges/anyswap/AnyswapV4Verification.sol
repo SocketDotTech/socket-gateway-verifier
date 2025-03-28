@@ -11,8 +11,7 @@ contract AnyswapV4Verification is BaseVerifier {
         address token,
         address wrapperTokenAddress
     ) external returns (SocketRequest memory) {
-        return
-            SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
+        return SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
     }
 
     receive() external payable {}

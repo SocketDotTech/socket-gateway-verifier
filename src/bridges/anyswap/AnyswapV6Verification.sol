@@ -12,8 +12,7 @@ contract AnyswapV6Verification is BaseVerifier {
         address wrapperTokenAddress,
         bool isEvm
     ) external payable returns (SocketRequest memory) {
-        return
-            SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
+        return SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
     }
 
     receive() external payable {}

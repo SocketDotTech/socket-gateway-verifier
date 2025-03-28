@@ -38,15 +38,11 @@ contract SocketVerifier is Ownable {
         socketGateway = _socketGateway;
     }
 
-    function parseCallData(
-        bytes calldata callData
-    ) public returns (UserRequest memory) {
+    function parseCallData(bytes calldata callData) public returns (UserRequest memory) {
         // get calldata signature from first 4 bytes
         uint32 routeId = uint32(bytes4(callData[0:4]));
         if (routeIdsToVerifiers[routeId] != address(0)) {
-            (bool success, bytes memory socketRequest) = routeIdsToVerifiers[
-                routeId
-            ].call(callData[4:]);
+            (bool success, bytes memory socketRequest) = routeIdsToVerifiers[routeId].call(callData[4:]);
             if (!success) {
                 revert FailedToVerify();
             }
@@ -56,10 +52,7 @@ contract SocketVerifier is Ownable {
         }
     }
 
-    function validateRotueId(
-        bytes calldata callData,
-        uint32 expectedRouteId
-    ) external {
+    function validateRotueId(bytes calldata callData, uint32 expectedRouteId) external {
         uint32 routeId = uint32(bytes4(callData[0:4]));
         if (routeIdsToVerifiers[routeId] != address(0)) {
             if (routeId != expectedRouteId) {
@@ -70,39 +63,27 @@ contract SocketVerifier is Ownable {
         }
     }
 
-    function validateSocketRequest(
-        bytes calldata callData,
-        UserRequestValidation calldata expectedRequest
-    ) external {
+    function validateSocketRequest(bytes calldata callData, UserRequestValidation calldata expectedRequest) external {
         UserRequest memory userRequest = parseCallData(callData);
         if (userRequest.routeId != expectedRequest.routeId) {
             revert RouteIdNotMatched();
         }
 
-        SocketRequest memory socketRequest = abi.decode(
-            userRequest.socketRequest,
-            (SocketRequest)
-        );
+        SocketRequest memory socketRequest = abi.decode(userRequest.socketRequest, (SocketRequest));
 
         if (socketRequest.amount != expectedRequest.socketRequest.amount) {
             revert AmountNotMatched();
         }
-        if (
-            socketRequest.recipient != expectedRequest.socketRequest.recipient
-        ) {
+        if (socketRequest.recipient != expectedRequest.socketRequest.recipient) {
             revert RecipientNotMatched();
         }
-        if (
-            socketRequest.toChainId != expectedRequest.socketRequest.toChainId
-        ) {
+        if (socketRequest.toChainId != expectedRequest.socketRequest.toChainId) {
             revert ToChainIdNotMatched();
         }
         if (socketRequest.token != expectedRequest.socketRequest.token) {
             revert TokenNotMatched();
         }
-        if (
-            socketRequest.signature != expectedRequest.socketRequest.signature
-        ) {
+        if (socketRequest.signature != expectedRequest.socketRequest.signature) {
             revert SignatureNotMatched();
         }
     }

@@ -13,10 +13,7 @@ contract SocketVerifierTest is Test {
     AnyswapV4Verification public anyswapVerifier = new AnyswapV4Verification();
 
     function setUp() public {
-        socketVerifier = new SocketVerifier(
-            address(this),
-            0x3a23F943181408EAC424116Af7b7790c94Cb97a5
-        );
+        socketVerifier = new SocketVerifier(address(this), 0x3a23F943181408EAC424116Af7b7790c94Cb97a5);
         socketVerifier.addVerifier(19, address(hopVerifier));
         socketVerifier.addVerifier(6, address(anyswapVerifier));
     }
@@ -27,22 +24,17 @@ contract SocketVerifierTest is Test {
         // should not throw errors
         socketVerifier.validateRotueId(exampledata, 19);
 
-        SocketVerifier.SocketRequest
-            memory _expectedSocketRequest = SocketVerifier.SocketRequest(
-                5000000,
-                0x32a80b98e33c3A0E57D635C56707208D29f970a2,
-                100,
-                0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174,
-                0xb8fc75e1
-            );
-
-        SocketVerifier.UserRequestValidation
-            memory _expectedUserRequestValidation = SocketVerifier
-                .UserRequestValidation(19, _expectedSocketRequest);
-        socketVerifier.validateSocketRequest(
-            exampledata,
-            _expectedUserRequestValidation
+        SocketVerifier.SocketRequest memory _expectedSocketRequest = SocketVerifier.SocketRequest(
+            5000000,
+            0x32a80b98e33c3A0E57D635C56707208D29f970a2,
+            100,
+            0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174,
+            0xb8fc75e1
         );
+
+        SocketVerifier.UserRequestValidation memory _expectedUserRequestValidation = SocketVerifier
+            .UserRequestValidation(19, _expectedSocketRequest);
+        socketVerifier.validateSocketRequest(exampledata, _expectedUserRequestValidation);
     }
 
     function testAnyswapERC20Verifier() public {
@@ -51,21 +43,16 @@ contract SocketVerifierTest is Test {
         // should not throw errors
         socketVerifier.validateRotueId(exampledata, 6);
 
-        SocketVerifier.SocketRequest
-            memory _expectedSocketRequest = SocketVerifier.SocketRequest(
-                87624946,
-                0x0E1B5AB67aF1c99F8c7Ebc71f41f75D4D6211e53,
-                10,
-                0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174,
-                0xf443318a
-            );
-
-        SocketVerifier.UserRequestValidation
-            memory _expectedUserRequestValidation = SocketVerifier
-                .UserRequestValidation(6, _expectedSocketRequest);
-        socketVerifier.validateSocketRequest(
-            exampledata,
-            _expectedUserRequestValidation
+        SocketVerifier.SocketRequest memory _expectedSocketRequest = SocketVerifier.SocketRequest(
+            87624946,
+            0x0E1B5AB67aF1c99F8c7Ebc71f41f75D4D6211e53,
+            10,
+            0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174,
+            0xf443318a
         );
+
+        SocketVerifier.UserRequestValidation memory _expectedUserRequestValidation = SocketVerifier
+            .UserRequestValidation(6, _expectedSocketRequest);
+        socketVerifier.validateSocketRequest(exampledata, _expectedUserRequestValidation);
     }
 }
