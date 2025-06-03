@@ -20,6 +20,15 @@ export const deployCCTPVerifier = async () => {
     deployment_json = fs.readFileSync(networkFilePath, "utf-8");
     const deployment = JSON.parse(deployment_json);
 
+    // check if the contract is already deployed
+    const ContractAddress = deployment[CONTRACT_NAME];
+    if (ContractAddress) {
+      console.log(`${CONTRACT_NAME} already deployed to:`, ContractAddress);
+      return {
+        success: true,
+        address: ContractAddress,
+      };
+    }
     const factory = await ethers.getContractFactory(CONTRACT_NAME);
     const Contract = await factory.deploy();
     console.log(`about to deploy ${CONTRACT_NAME}`);

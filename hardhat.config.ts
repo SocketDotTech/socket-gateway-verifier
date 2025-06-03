@@ -194,7 +194,15 @@ const config: HardhatUserConfig = {
           browserURL: 'https://zkevm.polygonscan.com',
           apiURL: 'https://api-zkevm.polygonscan.com/api',
         }
-      }
+      },
+      {
+        network: "base",
+        chainId: 8453,
+        urls: {
+          browserURL: 'https://basescan.org',
+          apiURL: 'https://api.basescan.org/api',
+        }
+      },
     ]
   },
   paths: {

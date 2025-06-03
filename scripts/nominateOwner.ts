@@ -1,14 +1,14 @@
 import { SocketVerifier__factory } from "../typechain";
-
+import { ethers } from "hardhat";
 const hre = require("hardhat");
 const fs = require("fs");
 const path = require("path");
 
 export const nominateOwner = async () => {
   try {
-    const { getNamedAccounts, network } = hre;
+    const { network } = hre;
     const networkName = network.name;
-    const { deployer } = await getNamedAccounts();
+    const [deployer] = await ethers.getSigners();
 
     console.log("deployer ", deployer);
 
@@ -29,7 +29,7 @@ export const nominateOwner = async () => {
 
     // check owner
     const owner = await contract.owner();
-    if (owner !== deployer) {
+    if (owner !== deployer.address) {
       throw new Error("Owner is not deployer");
     }
 

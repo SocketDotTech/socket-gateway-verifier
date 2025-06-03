@@ -27,7 +27,7 @@ export const routeIdConfigs: Record<
     AcrossV3Verification: 415,
     CCTPVerification: 396,
   },
-  optimism: {
+  opt: {
     AcrossV3Verification: 413,
     CCTPVerification: 396,
   },

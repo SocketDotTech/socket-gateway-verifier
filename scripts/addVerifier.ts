@@ -1,6 +1,7 @@
 import { SocketVerifier__factory } from "../typechain";
 import { routeIdConfigs, VerifierName } from "./config";
 import { confirm } from "./utils";
+import { ethers } from "hardhat";
 
 const hre = require("hardhat");
 const fs = require("fs");
@@ -8,11 +9,9 @@ const path = require("path");
 
 export const addVerifier = async () => {
   try {
-    const { getNamedAccounts, network } = hre;
+    const { network } = hre;
     const networkName = network.name;
-    const { deployer } = await getNamedAccounts();
-
-    console.log("deployer ", deployer);
+    const [deployer] = await ethers.getSigners();
 
     const networkFilePath = path.join(
       __dirname,
@@ -23,6 +22,9 @@ export const addVerifier = async () => {
     deployment_json = fs.readFileSync(networkFilePath, "utf-8");
     const deployment = JSON.parse(deployment_json);
     const SocketVerifierAddress = deployment?.SocketVerifier;
+    if (!SocketVerifierAddress) {
+      throw new Error("SocketVerifier not deployed");
+    }
 
     const contract = SocketVerifier__factory.connect(
       SocketVerifierAddress,
@@ -31,13 +33,13 @@ export const addVerifier = async () => {
 
     // check owner
     const owner = await contract.owner();
-    if (owner !== deployer) {
+    if (owner !== deployer.address) {
       throw new Error("Owner is not deployer");
     }
 
     // config
-    const VerifierName: VerifierName = "AcrossV3Verification";
-    // const VerifierName = "CCTPVerification";
+    // const VerifierName: VerifierName = "AcrossV3Verification";
+    const VerifierName = "CCTPVerification";
     const verifierAddress = deployment[VerifierName];
     if (!verifierAddress) {
       throw new Error(`${VerifierName} not deployed`);
