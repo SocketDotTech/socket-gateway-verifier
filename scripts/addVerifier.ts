@@ -1,0 +1,93 @@
+import { SocketVerifier__factory } from "../typechain";
+import { routeIdConfigs, VerifierName } from "./config";
+import { confirm } from "./utils";
+
+const hre = require("hardhat");
+const fs = require("fs");
+const path = require("path");
+
+export const addVerifier = async () => {
+  try {
+    const { getNamedAccounts, network } = hre;
+    const networkName = network.name;
+    const { deployer } = await getNamedAccounts();
+
+    console.log("deployer ", deployer);
+
+    const networkFilePath = path.join(
+      __dirname,
+      `../deployments/${networkName}.json`
+    );
+    // check if the contract is already deployed in deployments folder in json
+    let deployment_json = undefined;
+    deployment_json = fs.readFileSync(networkFilePath, "utf-8");
+    const deployment = JSON.parse(deployment_json);
+    const SocketVerifierAddress = deployment?.SocketVerifier;
+
+    const contract = SocketVerifier__factory.connect(
+      SocketVerifierAddress,
+      deployer
+    );
+
+    // check owner
+    const owner = await contract.owner();
+    if (owner !== deployer) {
+      throw new Error("Owner is not deployer");
+    }
+
+    // config
+    const VerifierName: VerifierName = "AcrossV3Verification";
+    // const VerifierName = "CCTPVerification";
+    const verifierAddress = deployment[VerifierName];
+    if (!verifierAddress) {
+      throw new Error(`${VerifierName} not deployed`);
+    }
+    // @note change before running
+    const routeId = routeIdConfigs[networkName][VerifierName];
+    if (!routeId) {
+      throw new Error("Route ID is not configured");
+    }
+
+    // check if the verifier is already added
+    const currentVerifierAddress = await contract.routeIdsToVerifiers(routeId);
+    if (
+      currentVerifierAddress.toLowerCase() === verifierAddress.toLowerCase()
+    ) {
+      throw new Error("Verifier is already added");
+    }
+
+    console.log({
+      routeId,
+      networkName,
+      VerifierName,
+      verifierAddress,
+      SocketVerifierAddress,
+    });
+    await confirm("Are you sure to add this verifier? (y/n)");
+
+    console.log("🔌 Adding verifier");
+    const tx = await contract.addVerifier(routeId, verifierAddress);
+    const receipt = await tx.wait();
+    console.log("✅ Verifier added");
+
+    return {
+      success: true,
+      receipt,
+    };
+  } catch (error) {
+    console.log(`❌ Error in adding verifier`, error);
+    return {
+      success: false,
+    };
+  }
+};
+
+addVerifier()
+  .then(() => {
+    console.log(`✅ finished running the add verifier`);
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
