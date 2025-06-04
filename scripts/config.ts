@@ -19,7 +19,7 @@ export const routeIdConfigs: Record<
     AcrossV3Verification: undefined, // across not supported on xdai
     CCTPVerification: undefined, // cctp not supported on xdai
   },
-  ethereum: {
+  mainnet: {
     AcrossV3Verification: 429,
     CCTPVerification: 407,
   },
