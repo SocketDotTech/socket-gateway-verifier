@@ -98,8 +98,8 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: `${ethereumRPC}`,
-      gasPrice: 30_000_000_000, // 30 gwei
-      gasMultiplier: 1.5,
+      // gasPrice: 30_000_000_000, // 30 gwei
+      // gasMultiplier: 1.5,
       chainId: 1,
       accounts: [ socketDeployerKey ],
     },
