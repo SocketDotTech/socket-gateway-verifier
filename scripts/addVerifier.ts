@@ -39,7 +39,8 @@ export const addVerifier = async () => {
 
     // config
     // const VerifierName: VerifierName = "AcrossV3Verification";
-    const VerifierName = "CCTPVerification";
+    // const VerifierName = "CCTPVerification";
+    const VerifierName = "GnosisBridgeRouterVerification";
     const verifierAddress = deployment[VerifierName];
     if (!verifierAddress) {
       throw new Error(`${VerifierName} not deployed`);

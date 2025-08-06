@@ -1,11 +1,14 @@
 export const create3Factory = "0xf2b6544589ab65e731883a0244cbefe5735322c5";
 
-export type VerifierName = "AcrossV3Verification" | "CCTPVerification";
+export type VerifierName =
+  | "AcrossV3Verification"
+  | "CCTPVerification"
+  | "GnosisBridgeRouterVerification";
 
 // https://github.com/SocketDotTech/ll-core-v2/blob/main/src/addresses/index.ts
 export const routeIdConfigs: Record<
   string,
-  Record<VerifierName, number | undefined>
+  Partial<Record<VerifierName, number>>
 > = {
   avalanche: {
     AcrossV3Verification: undefined, // across not supported on avalanche
@@ -22,6 +25,7 @@ export const routeIdConfigs: Record<
   mainnet: {
     AcrossV3Verification: 429,
     CCTPVerification: 407,
+    GnosisBridgeRouterVerification: 444,
   },
   arbitrum: {
     AcrossV3Verification: 415,
