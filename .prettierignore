@@ -1,0 +1,9 @@
+lib
+!src/lib
+abi
+out
+typechain
+.vscode
+artifacts
+cache
+cache_hardhat

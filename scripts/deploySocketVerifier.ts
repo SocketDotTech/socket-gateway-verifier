@@ -2,6 +2,7 @@
 import { ethers, run } from 'hardhat';
 import { create3Factory } from './config';
 import Create3Abi from '../abi/create3/Create3Factory.json';
+import { confirm } from './utils';
 const hre = require("hardhat");
 const CONTRACT_NAME = "SocketVerifier";
 const fs = require('fs');
@@ -54,6 +55,8 @@ export const deploy = async () => {
     const receipt = await tx.wait();
     const deployedAddress = await create3FactoryContract.getDeployed(owner, salt);
     console.log("deployedAddress", deployedAddress);
+    await confirm("Are you sure to deploy this verifier? (y/n)");
+    
     console.log(`about to deploy ${CONTRACT_NAME}`);
 
 

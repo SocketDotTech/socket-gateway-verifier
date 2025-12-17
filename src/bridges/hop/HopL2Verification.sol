@@ -26,8 +26,7 @@ contract HopL2Verifier is BaseVerifier {
         uint256 toChainId,
         HopBridgeRequestData calldata hopBridgeRequestData
     ) external returns (SocketRequest memory) {
-        return
-            SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
+        return SocketRequest(amount, receiverAddress, toChainId, token, msg.sig);
     }
 
     receive() external payable {}

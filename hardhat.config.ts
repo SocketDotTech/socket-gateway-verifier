@@ -41,6 +41,8 @@ const getEtherscanKey = () => {
       return process.env.OPTIMISM_ETHERSCAN_KEY
     case 'arbitrum':
       return process.env.ARBITRUM_ETHERSCAN_KEY
+    case 'base':
+      return process.env.BASE_ETHERSCAN_KEY
     case 'avalanche':
       return process.env.AVALANCHE_ETHERSCAN_KEY
     case 'bsc':
@@ -96,8 +98,8 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: `${ethereumRPC}`,
-      gasPrice: 30_000_000_000, // 30 gwei
-      gasMultiplier: 1.5,
+      // gasPrice: 30_000_000_000, // 30 gwei
+      // gasMultiplier: 1.5,
       chainId: 1,
       accounts: [ socketDeployerKey ],
     },
@@ -150,6 +152,13 @@ const config: HardhatUserConfig = {
       chainId: 42161,
       accounts: [ socketDeployerKey ],
     },
+    base: {
+      url: process.env.BASE_RPC,
+      // gasPrice: 5_000_000_000, // 5 gwei
+      gasMultiplier: 1.5,
+      chainId: 8453,
+      accounts: [ socketDeployerKey ],
+    },
     aurora: {
       url: "https://mainnet.aurora.dev",
       chainId: 1313161554,
@@ -168,6 +177,7 @@ const config: HardhatUserConfig = {
       polygon: process.env.POLYGON_ETHERSCAN_KEY,
       gnosis: process.env.GNOSIS_ETHERSCAN_KEY,
       optimisticEthereum: process.env.OPTIMISM_ETHERSCAN_KEY,
+      base: process.env.BASE_ETHERSCAN_KEY,
       arbitrumOne: process.env.ARBITRUM_ETHERSCAN_KEY,
       aurora: process.env.AURORA_ETHERSCAN_KEY,
       bsc: process.env.BINANCE_ETHERSCAN_KEY,
@@ -184,7 +194,15 @@ const config: HardhatUserConfig = {
           browserURL: 'https://zkevm.polygonscan.com',
           apiURL: 'https://api-zkevm.polygonscan.com/api',
         }
-      }
+      },
+      {
+        network: "base",
+        chainId: 8453,
+        urls: {
+          browserURL: 'https://basescan.org',
+          apiURL: 'https://api.basescan.org/api',
+        }
+      },
     ]
   },
   paths: {
