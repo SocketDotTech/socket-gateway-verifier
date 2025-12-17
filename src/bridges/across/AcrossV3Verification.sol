@@ -38,7 +38,7 @@ contract AcrossV3Verification is BaseVerifier {
             SocketRequest({
                 amount: amount,
                 recipient: acrossBridgeData.senderReceiverAddresses[1],
-                toChainId: acrossBridgeData.outputAmountToChainIdArray[1],
+                toChainId: acrossBridgeData.toChainId,
                 token: acrossBridgeData.inputOutputTokens[0],
                 signature: msg.sig
             });
@@ -52,7 +52,7 @@ contract AcrossV3Verification is BaseVerifier {
             SocketRequest({
                 amount: amount,
                 recipient: acrossBridgeData.senderReceiverAddresses[1],
-                toChainId: acrossBridgeData.outputAmountToChainIdArray[1],
+                toChainId: acrossBridgeData.toChainId,
                 token: NATIVE_TOKEN_ADDRESS,
                 signature: msg.sig
             });
