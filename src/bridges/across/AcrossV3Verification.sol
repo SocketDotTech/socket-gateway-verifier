@@ -9,19 +9,25 @@ contract AcrossV3Verification is BaseVerifier {
     struct AcrossBridgeDataNoToken {
         address[] senderReceiverAddresses; // 0 - sender, 1 - receiver
         address outputToken;
-        uint256[] outputAmountToChainIdArray; // 0 -output amount, 1 - tochainId
+        uint256 toChainId;
         uint32[] quoteAndDeadlineTimeStamps; // 0 - quoteTimestamp, 1 - fillDeadline
-        uint256 bridgeFee; // incase of swap involved in the tx, bridgeFee is deducted from swapped amount
+        uint256 bridgeFee; // Absolute fee in input token decimals
+        uint8 inputTokenDecimals; // Decimals of the input token (from swap or transfer)
+        uint8 outputTokenDecimals; // Decimals of the output token on destination
         bytes32 metadata;
+        bytes message; // Message for composable bridging
     }
 
     struct AcrossBridgeData {
         address[] senderReceiverAddresses; // 0 - sender, 1 - receiver
         address[] inputOutputTokens; // 0 - input token, 1 - output token
-        uint256[] outputAmountToChainIdArray; // 0 -output amount, 1 - tochainId
+        uint256 toChainId;
         uint32[] quoteAndDeadlineTimeStamps; // 0 - quoteTimestamp, 1 - fillDeadline
-        uint256 bridgeFee; // incase of swap involved in the tx, bridgeFee is deducted from swapped amount
+        uint256 bridgeFee; // Absolute fee in input token decimals
+        uint8 inputTokenDecimals; // Decimals of the input token
+        uint8 outputTokenDecimals; // Decimals of the output token on destination
         bytes32 metadata;
+        bytes message; // Message for composable bridging
     }
 
     function bridgeERC20To(
