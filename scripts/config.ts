@@ -12,7 +12,7 @@ export const routeIdConfigs: Record<
     CCTPVerification: 385,
   },
   base: {
-    AcrossV3Verification: 411,
+    AcrossV3Verification: 427,
     CCTPVerification: 397,
   },
   xdai: {
@@ -20,19 +20,19 @@ export const routeIdConfigs: Record<
     CCTPVerification: undefined, // cctp not supported on xdai
   },
   mainnet: {
-    AcrossV3Verification: 429,
+    AcrossV3Verification: 446,
     CCTPVerification: 407,
   },
   arbitrum: {
-    AcrossV3Verification: 415,
+    AcrossV3Verification: 431,
     CCTPVerification: 396,
   },
   opt: {
-    AcrossV3Verification: 413,
+    AcrossV3Verification: 427,
     CCTPVerification: 396,
   },
   polygon: {
-    AcrossV3Verification: 416,
+    AcrossV3Verification: 432,
     CCTPVerification: 403,
   },
 };

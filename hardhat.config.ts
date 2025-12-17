@@ -153,7 +153,7 @@ const config: HardhatUserConfig = {
       accounts: [ socketDeployerKey ],
     },
     base: {
-      url: `https://base.llamarpc.com`,
+      url: process.env.BASE_RPC,
       // gasPrice: 5_000_000_000, // 5 gwei
       gasMultiplier: 1.5,
       chainId: 8453,

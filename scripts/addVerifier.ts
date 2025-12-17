@@ -38,8 +38,8 @@ export const addVerifier = async () => {
     }
 
     // config
-    // const VerifierName: VerifierName = "AcrossV3Verification";
-    const VerifierName = "CCTPVerification";
+    const VerifierName: VerifierName = "AcrossV3Verification";
+    // const VerifierName = "CCTPVerification";
     const verifierAddress = deployment[VerifierName];
     if (!verifierAddress) {
       throw new Error(`${VerifierName} not deployed`);
@@ -69,8 +69,9 @@ export const addVerifier = async () => {
 
     console.log("🔌 Adding verifier");
     const tx = await contract.addVerifier(routeId, verifierAddress);
+    console.log("tx", tx.hash);
     const receipt = await tx.wait();
-    console.log("✅ Verifier added");
+    console.log("✅ Verifier added", tx.hash);
 
     return {
       success: true,
